@@ -2,9 +2,9 @@ displayName: AWS Sigv4 Auth
 type: middleware
 iconPath: .assets/icon.png
 
-import: github.com/LiveOakLabs/traefik-middlware-sigv4
+import: github.com/LiveOakLabs/traefik_middleware_sigv4
 
-summary: Sign AWS requests
+summary: Sign AWS requests - NOTE this is experimental and not ready for production
 
 testData:  # https://min.io/docs/minio/linux/administration/minio-console.html
   service: s3
