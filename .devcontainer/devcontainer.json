@@ -1,0 +1,44 @@
+{
+	"name": "traefik-middleware-v4",
+	"dockerFile": "../.pipeline/Dockerfile",
+	"build": {
+		"args": {
+			"base_version": "1"
+		},
+    "cacheFrom": [
+      "registry.gitlab.com/liveoak/ci-pipeline/default:latest"
+    ]
+	},
+	"runArgs": [
+		"--name=traefik-middleware-v4"
+	],
+	"initializeCommand": "docker pull registry.gitlab.com/liveoak/ci-pipeline/alpine:1",
+	"postStartCommand": ".devcontainer/postStart.sh",
+	"containerEnv": {
+		"PROJECT_NAME": "traefik-middleware-v4",
+		"PROJECT_LOCATION": "liveoak/traefik-plugins",
+		"DOCKER_TOKEN": "${localEnv:DOCKER_TOKEN}",
+		"LOB_EMAIL": "${localEnv:LOB_EMAIL}",
+    "SSO_ENABLED": "true"
+	},
+	"remoteEnv": {
+		"PATH": "${containerEnv:PATH}:${containerWorkspaceFolder}/scripts"
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"HashiCorp.terraform",
+				"GitLab.gitlab-workflow",
+        "golang.Go",
+				"ms-azuretools.vscode-docker",
+				"eamodio.gitlens"
+			]
+		}
+	},
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.terraformrc,target=/root/.terraformrc,type=bind,consistency=cached",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.aws,target=/root/.aws,type=bind,consistency=cached"
+	]
+}
